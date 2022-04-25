@@ -1,3 +1,10 @@
+#Adds the option to go to eg. http://localhost:8080/actuator/health for seeing the running configuration
+#see https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health"
 spring:
   main:
     allow-circular-references: true
@@ -85,6 +92,8 @@ hapi:
     #    enable_repository_validating_interceptor: false
     #    enable_index_missing_fields: false
     #    enable_index_contained_resource: false
+    ###  !!Extended Lucene/Elasticsearch Indexing is still a experimental feature, expect some features (e.g. _total=accurate) to not work as expected!!
+    ###  more information here: https://hapifhir.io/hapi-fhir/docs/server_jpa/elastic.html
     #    advanced_lucene_indexing: false
     #    enforce_referential_integrity_on_delete: false
     #    enforce_referential_integrity_on_write: false
@@ -177,3 +186,8 @@ hapi:
 #  protocol: 'http'
 #  schema_management_strategy: CREATE
 #  username: SomeUsername
+# configure keycloak authentication which handles authentication of the FHIR api of this server
+keycloak:
+  enabled: false
+logging.level.org.springframework.web: trace
+logging.level.org.apache: trace
