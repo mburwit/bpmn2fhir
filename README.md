@@ -302,6 +302,8 @@ tester:
       token: '********'
 ```
 
+Here, the Tester Client will add the header `Authorization: Bearer ********` to each request.
+
 #### 3. Authorization Header
 
 ```yaml
