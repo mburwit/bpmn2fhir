@@ -1,5 +1,6 @@
 package ca.uhn.fhir.jpa.starter;
 
+import org.helict.bpmn2fhir.Bpmn2FhirConfig;
 import org.helict.fhir.jpa.starter.tester.FhirClientFactory;
 import ca.uhn.fhir.to.FhirTesterMvcConfig;
 import ca.uhn.fhir.to.TesterConfig;
@@ -17,7 +18,7 @@ import org.springframework.context.annotation.Import;
  *    method below
  */
 @Configuration
-@Import(FhirTesterMvcConfig.class)
+@Import({FhirTesterMvcConfig.class, Bpmn2FhirConfig.class})
 public class FhirTesterConfig {
 
 	/**

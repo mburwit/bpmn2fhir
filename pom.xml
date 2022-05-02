@@ -17,7 +17,7 @@
 		  <version>5.7.2</version>
     </parent>
 
-    <artifactId>hapi-fhir-jpaserver-starter</artifactId>
+    <artifactId>bpmn2fhir-server</artifactId>
     <groupId>org.helict</groupId>
     <version>5.7.2-SNAPSHOT</version>
 
@@ -26,6 +26,7 @@
         <hapi.fhir.version>5.7.2</hapi.fhir.version>
         <keycloak.version>17.0.1</keycloak.version>
         <resteasy.version>4.7.5.Final</resteasy.version>
+        <saxon.version>11.3</saxon.version>
     </properties>
 
     <prerequisites>
@@ -34,7 +35,7 @@
 
     <packaging>war</packaging>
 
-    <name>HAPI FHIR JPA Server - Starter Project</name>
+    <name>HAPI FHIR JPA Server - BPMN-to-FHIR Project</name>
 
     <repositories>
         <repository>
@@ -218,24 +219,12 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-<!--        &lt;!&ndash; This dependency holds all the code extensions that OpenSRP will build on top of Hapi-Fhir&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.smartregister.hapi-fhir-opensrp-extensions</groupId>-->
-<!--            <artifactId>location</artifactId>-->
-<!--            <version>0.0.4-SNAPSHOT</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.smartregister.hapi-fhir-opensrp-extensions</groupId>-->
-<!--            <artifactId>practitioner</artifactId>-->
-<!--            <version>0.0.4-SNAPSHOT</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.smartregister.hapi-fhir-opensrp-extensions</groupId>-->
-<!--            <artifactId>configuration</artifactId>-->
-<!--            <version>0.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
+        <!-- Used for XSL transformation -->
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>Saxon-HE</artifactId>
+            <version>${saxon.version}</version>
+        </dependency>
 
         <!-- HAPI-FHIR uses Logback for logging support. The logback library is included automatically by Maven as a part of the hapi-fhir-base dependency, but you also need to include a logging library. Logback
             is used here, but log4j would also be fine. -->

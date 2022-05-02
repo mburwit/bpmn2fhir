@@ -191,3 +191,9 @@ keycloak:
   enabled: false
 logging.level.org.springframework.web: trace
 logging.level.org.apache: trace
+# ICD API config
+bpmn2fhir:
+  icd:
+    clientId: "MY-WHO-ICD-API-CLIENT-ID"
+    clientSecret: "MY-WHO-ICD-API-CLIENT-ID"
+    url: "https://icdaccessmanagement.who.int/connect/token"

@@ -1,5 +1,6 @@
 package org.helict.fhir.jpa.starter.security;
 
+import org.helict.bpmn2fhir.Bpmn2FhirConfig;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.client.KeycloakClientRequestFactory;
@@ -14,15 +15,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.web.authentication.logout.ForwardLogoutSuccessHandler;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
@@ -84,6 +82,8 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
 		http.cors()
 			.and().authorizeRequests()
 			.antMatchers("/fhir/metadata").permitAll()
+			.antMatchers(Bpmn2FhirConfig.BPMN_2_FHIR_BASE_PATH).permitAll()
+			.antMatchers(Bpmn2FhirConfig.ICD_API_TOKEN_BASE_PATH).permitAll()
 			.anyRequest().authenticated()
 			.and().csrf().ignoringAntMatchers("/fhir/**")
 			.and()
