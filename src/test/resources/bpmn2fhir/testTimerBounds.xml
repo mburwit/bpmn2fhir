@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:cp="http://www.helict.de/bpmn4cp" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+    <bpmn2:process id="Process_1" isExecutable="false">
+        <bpmn2:task id="Activity_1d0lbgd" />
+        <bpmn2:boundaryEvent id="Event_17ewgq0" attachedToRef="Activity_1d0lbgd">
+            <bpmn2:timerEventDefinition id="TimerEventDefinition_0l9qspp">
+                <bpmn2:timeCycle xsi:type="cp:TimeCycle" frequency="3" period="7" periodUnit="d" timeOfDay="14:00" duration="13" durationUnit="min">
+                    <cp:boundsDuration value="4" unit="wk" />
+                    <cp:boundsRange>
+                        <cp:boundsRangeLowerLimit value="3" unit="d" />
+                        <cp:boundsRangeUpperLimit value="2" unit="wk" />
+                    </cp:boundsRange>
+                    <cp:boundsPeriod start="2004-12-10T14:00Z" end="2004-12-10T14:00Z" />
+                </bpmn2:timeCycle>
+            </bpmn2:timerEventDefinition>
+        </bpmn2:boundaryEvent>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+            <bpmndi:BPMNShape id="Activity_1d0lbgd_di" bpmnElement="Activity_1d0lbgd">
+                <dc:Bounds x="250" y="180" width="100" height="80" />
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Event_1j7zxso_di" bpmnElement="Event_17ewgq0">
+                <dc:Bounds x="332" y="162" width="36" height="36" />
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

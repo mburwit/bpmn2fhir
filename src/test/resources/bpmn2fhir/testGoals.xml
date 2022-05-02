@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:cp="http://www.helict.de/bpmn4cp" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+    <bpmn2:process id="Process_1" isExecutable="false">
+        <bpmn2:startEvent id="Event_1chi3xe">
+            <bpmn2:outgoing>Flow_1v166my</bpmn2:outgoing>
+        </bpmn2:startEvent>
+        <bpmn2:sequenceFlow id="Flow_1v166my" sourceRef="Event_1chi3xe" targetRef="Activity_0ixsmss" />
+        <bpmn2:endEvent id="Event_1io68su">
+            <bpmn2:incoming>Flow_02ivjmh</bpmn2:incoming>
+        </bpmn2:endEvent>
+        <bpmn2:sequenceFlow id="Flow_02ivjmh" sourceRef="Activity_0ixsmss" targetRef="Event_1io68su" />
+        <bpmn2:subProcess id="Activity_0ixsmss" name="Weight Control" cp:selectionBehavior="any" cp:definitionCanonical="http://localhost:8080/api/PlanDefinition/3aa704e9-c6a1-48d6-ba93-3dc4a95b9aca">
+            <bpmn2:incoming>Flow_1v166my</bpmn2:incoming>
+            <bpmn2:outgoing>Flow_02ivjmh</bpmn2:outgoing>
+        </bpmn2:subProcess>
+        <cp:goalState id="GoalState_1q0d0zi" bpmn2:name="Mein tolles Ziel" dataObjectRef="DataObject_1y43rgg">
+            <bpmn2:extensionElements>
+                <cp:goal name="Weight" code="weight" codeSystem="http://www.helict.de/fhir/CodeSystem/vCare/observations" defaultValue="90" />
+                <cp:goal name="Alcohol Intake" code="alcohol" codeSystem="http://www.helict.de/fhir/CodeSystem/vCare/observations" defaultValue="2342" />
+                <cp:goal name="Blood Pressure" code="blood-pressure" codeSystem="http://www.helict.de/fhir/CodeSystem/vCare/observations" defaultValue="35" />
+            </bpmn2:extensionElements>
+        </cp:goalState>
+        <bpmn2:dataObject id="DataObject_1y43rgg" />
+        <cp:goalState id="GoalState_1c305kj" bpmn2:name="Second Goal" dataObjectRef="DataObject_0or4xzy">
+            <bpmn2:extensionElements>
+                <cp:goal name="Alcohol Intake" code="alcohol" codeSystem="http://www.helict.de/fhir/CodeSystem/vCare/observations" defaultValue="afdf" />
+                <cp:goal name="Time of Inactivity" code="tMDTI" codeSystem="http://www.helict.de/fhir/CodeSystem/vCare/observations" />
+            </bpmn2:extensionElements>
+        </cp:goalState>
+        <bpmn2:dataObject id="DataObject_0or4xzy" />
+        <bpmn2:association id="Association_1yuhule" sourceRef="Activity_0ixsmss" targetRef="GoalState_1q0d0zi" />
+        <bpmn2:association id="Association_1x6702m" sourceRef="Activity_0ixsmss" targetRef="GoalState_1c305kj" />
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+            <bpmndi:BPMNEdge id="Flow_02ivjmh_di" bpmnElement="Flow_02ivjmh">
+                <di:waypoint x="480" y="250" />
+                <di:waypoint x="532" y="250" />
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_1v166my_di" bpmnElement="Flow_1v166my">
+                <di:waypoint x="328" y="250" />
+                <di:waypoint x="380" y="250" />
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape id="Event_1chi3xe_di" bpmnElement="Event_1chi3xe">
+                <dc:Bounds x="292" y="232" width="36" height="36" />
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Event_1io68su_di" bpmnElement="Event_1io68su">
+                <dc:Bounds x="532" y="232" width="36" height="36" />
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="GoalState_1c305kj_di" bpmnElement="GoalState_1c305kj">
+                <dc:Bounds x="312" y="332" width="36" height="36" />
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds x="298" y="375" width="64" height="14" />
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_16y8rv3_di" bpmnElement="Activity_0ixsmss">
+                <dc:Bounds x="380" y="210" width="100" height="80" />
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="GoalState_1q0d0zi_di" bpmnElement="GoalState_1q0d0zi">
+                <dc:Bounds x="472" y="332" width="36" height="36" />
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds x="456" y="375" width="74" height="14" />
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge id="Association_1yuhule_di" bpmnElement="Association_1yuhule">
+                <di:waypoint x="454" y="290" />
+                <di:waypoint x="479" y="332" />
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Association_1x6702m_di" bpmnElement="Association_1x6702m">
+                <di:waypoint x="390" y="290" />
+                <di:waypoint x="348" y="332" />
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

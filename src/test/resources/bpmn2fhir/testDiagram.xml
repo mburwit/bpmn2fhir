@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:cp="http://www.helict.de/bpmn4cp" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="Process_1" name="&#10;" isExecutable="false">
+    <bpmn2:startEvent id="Event_014zorr">
+      <bpmn2:outgoing>Flow_0rr3qwp</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:task id="Activity_0le6sbg" name="Borg assessment" cp:codeSystem="health/questionnaire/request" cp:code="BORG" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/questionnaire-types">
+      <bpmn2:incoming>Flow_1jvvy6o</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0o8rn1w</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:subProcess id="Activity_12slbw9" name="Cardio game packages" cp:selectionBehavior="one-or-more">
+      <bpmn2:incoming>Flow_1dpelaq</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_047nvfs</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_1o1w6jc</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_06jhj3q</bpmn2:outgoing>
+      <bpmn2:task id="Activity_1dl9k9m" name="Beginner Increase HR" />
+      <bpmn2:task id="Activity_05rvltr" name="Blood Circulation" />
+      <bpmn2:task id="Activity_0mzjdcw" name="Advanced Increase HR" />
+      <bpmn2:task id="Activity_06ztz5p" name="Advanced Blood Circulation" />
+      <bpmn2:boundaryEvent id="Event_1rcmqgf" cancelActivity="false" attachedToRef="Activity_1dl9k9m">
+        <bpmn2:timerEventDefinition id="TimerEventDefinition_069jqj2">
+          <bpmn2:timeDuration xsi:type="cp:TimeDuration" duration="17" durationUnit="min" />
+        </bpmn2:timerEventDefinition>
+      </bpmn2:boundaryEvent>
+      <bpmn2:boundaryEvent id="Event_0spfqss" cancelActivity="false" attachedToRef="Activity_05rvltr">
+        <bpmn2:timerEventDefinition id="TimerEventDefinition_0jf8rwl">
+          <bpmn2:timeDuration xsi:type="cp:TimeDuration" duration="8" durationUnit="min" />
+        </bpmn2:timerEventDefinition>
+      </bpmn2:boundaryEvent>
+      <bpmn2:boundaryEvent id="Event_0fhsqu6" cancelActivity="false" attachedToRef="Activity_0mzjdcw">
+        <bpmn2:timerEventDefinition id="TimerEventDefinition_04m8rw9">
+          <bpmn2:timeDuration xsi:type="cp:TimeDuration" duration="13" durationUnit="min" />
+        </bpmn2:timerEventDefinition>
+      </bpmn2:boundaryEvent>
+      <bpmn2:boundaryEvent id="Event_03lnbax" cancelActivity="false" attachedToRef="Activity_06ztz5p">
+        <bpmn2:timerEventDefinition id="TimerEventDefinition_04qun5y">
+          <bpmn2:timeDuration xsi:type="cp:TimeDuration" duration="9" durationUnit="min" />
+        </bpmn2:timerEventDefinition>
+      </bpmn2:boundaryEvent>
+    </bpmn2:subProcess>
+    <bpmn2:sequenceFlow id="Flow_1jvvy6o" sourceRef="Event_1k8s9z2" targetRef="Activity_0le6sbg" />
+    <bpmn2:boundaryEvent id="Event_1t2qv0z" cancelActivity="false" attachedToRef="Activity_12slbw9">
+      <bpmn2:timerEventDefinition id="TimerEventDefinition_1ysg8to">
+        <bpmn2:timeCycle xsi:type="cp:TimeCycle" frequency="3" frequencyMax="5" period="1" periodUnit="wk" durationUnit="min" />
+      </bpmn2:timerEventDefinition>
+    </bpmn2:boundaryEvent>
+    <bpmn2:task id="Activity_0qq44ks" name="Reminder game session" cp:codeSystem="reminder/message" cp:code="game-session" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/reminder-types">
+      <bpmn2:incoming>Flow_0rr3qwp</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0kai4dg</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_0rr3qwp" sourceRef="Event_014zorr" targetRef="Activity_0qq44ks" />
+    <bpmn2:exclusiveGateway id="Gateway_0uqn2t0">
+      <bpmn2:incoming>Flow_0kai4dg</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0bswmyr</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_10hjzk3</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="Flow_0kai4dg" sourceRef="Activity_0qq44ks" targetRef="Gateway_0uqn2t0" />
+    <bpmn2:sequenceFlow id="Flow_0bswmyr" sourceRef="Gateway_0uqn2t0" targetRef="Event_0didnqf" />
+    <bpmn2:intermediateCatchEvent id="Event_0didnqf" name="game-session_response == YES">
+      <bpmn2:incoming>Flow_0bswmyr</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0y6fzzn</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_0mszc1h">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="Flow_10hjzk3" sourceRef="Gateway_0uqn2t0" targetRef="Event_1detp0c" />
+    <bpmn2:intermediateCatchEvent id="Event_1detp0c" name="game-session_response == NO">
+      <bpmn2:incoming>Flow_10hjzk3</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_02qqh76</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_1kq7r0v">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:task id="Activity_0fp7vs6" name="Questionnaire reasons why" cp:codeSystem="health/questionnaire/request" cp:code="RRQ" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/questionnaire-types">
+      <bpmn2:incoming>Flow_02qqh76</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_19lq7bs</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_02qqh76" sourceRef="Event_1detp0c" targetRef="Activity_0fp7vs6" />
+    <bpmn2:endEvent id="Event_0ifh0ec">
+      <bpmn2:incoming>Flow_19lq7bs</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="Flow_19lq7bs" sourceRef="Activity_0fp7vs6" targetRef="Event_0ifh0ec" />
+    <bpmn2:exclusiveGateway id="Gateway_0c1rsfk">
+      <bpmn2:incoming>Flow_0fw9b67</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0rhex2b</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_0mioek8</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="Flow_0rhex2b" sourceRef="Gateway_0c1rsfk" targetRef="Event_154uzdf" />
+    <bpmn2:intermediateCatchEvent id="Event_154uzdf" name="not exists BORG or BORG &#60;= 6">
+      <bpmn2:incoming>Flow_0rhex2b</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1dpelaq</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_05okq0d">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="Flow_1dpelaq" sourceRef="Event_154uzdf" targetRef="Activity_12slbw9" />
+    <bpmn2:sequenceFlow id="Flow_0mioek8" sourceRef="Gateway_0c1rsfk" targetRef="Event_1y5m7ss" />
+    <bpmn2:intermediateCatchEvent id="Event_1y5m7ss" name="BORG &#62; 6">
+      <bpmn2:incoming>Flow_0mioek8</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0260arp</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_0iydjn0">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:task id="Activity_1yy4c4m" name="Reminder game access" cp:codeSystem="reminder/message" cp:code="game-physical" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/reminder-types">
+      <bpmn2:incoming>Flow_0y6fzzn</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0fw9b67</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_0y6fzzn" sourceRef="Event_0didnqf" targetRef="Activity_1yy4c4m" />
+    <bpmn2:sequenceFlow id="Flow_0fw9b67" sourceRef="Activity_1yy4c4m" targetRef="Gateway_0c1rsfk" />
+    <bpmn2:task id="Activity_0ja3id7" name="Reminder medication intake" cp:codeSystem="reminder/message" cp:code="medication" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/reminder-types">
+      <bpmn2:incoming>Flow_0260arp</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1fn8k9o</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_0260arp" sourceRef="Event_1y5m7ss" targetRef="Activity_0ja3id7" />
+    <bpmn2:task id="Activity_1rupp2g" name="suggest rest of joint" cp:codeSystem="reminder/message" cp:code="suggestion" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/reminder-types">
+      <bpmn2:incoming>Flow_1fn8k9o</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0823pab</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_1fn8k9o" sourceRef="Activity_0ja3id7" targetRef="Activity_1rupp2g" />
+    <bpmn2:task id="Activity_0zeahon" name="suggest e-learning" cp:codeSystem="message/elearning/message" cp:code="HL_HF" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/eLearning-types">
+      <bpmn2:incoming>Flow_0823pab</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1hd7ntf</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_0823pab" sourceRef="Activity_1rupp2g" targetRef="Activity_0zeahon" />
+    <bpmn2:intermediateCatchEvent id="Event_1k8s9z2" name="session_completed==NO and EHR &#60;= SHR">
+      <bpmn2:incoming>Flow_047nvfs</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1jvvy6o</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_1vbnmqe">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="Flow_047nvfs" sourceRef="Activity_12slbw9" targetRef="Event_1k8s9z2" />
+    <bpmn2:sequenceFlow id="Flow_0o8rn1w" sourceRef="Activity_0le6sbg" targetRef="Gateway_00d0zn1" />
+    <bpmn2:intermediateCatchEvent id="Event_130wqg8" name="BORG &#62; 6">
+      <bpmn2:incoming>Flow_1t3fqa0</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0tu0i5v</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_1has07l">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:task id="Activity_1n37yk1" name="Reminder medication intake" cp:codeSystem="reminder/message" cp:code="medication" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/reminder-types">
+      <bpmn2:incoming>Flow_0tu0i5v</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_057hwmo</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:task id="Activity_1gnuigg" name="suggest rest of joint" cp:codeSystem="reminder/message" cp:code="suggestion" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/reminder-types">
+      <bpmn2:incoming>Flow_057hwmo</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_090hqum</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:endEvent id="Event_0ixwbh4">
+      <bpmn2:incoming>Flow_090hqum</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="Flow_090hqum" sourceRef="Activity_1gnuigg" targetRef="Event_0ixwbh4" />
+    <bpmn2:sequenceFlow id="Flow_0tu0i5v" sourceRef="Event_130wqg8" targetRef="Activity_1n37yk1" />
+    <bpmn2:sequenceFlow id="Flow_057hwmo" sourceRef="Activity_1n37yk1" targetRef="Activity_1gnuigg" />
+    <bpmn2:intermediateCatchEvent id="Event_0mol2at" name="session_completed==YES">
+      <bpmn2:incoming>Flow_1o1w6jc</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0tmgfbs</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_00nrx91">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="Flow_1o1w6jc" sourceRef="Activity_12slbw9" targetRef="Event_0mol2at" />
+    <bpmn2:task id="Activity_1iwuxp4" name="Borg assessment" cp:codeSystem="health/questionnaire/request" cp:code="BORG" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/questionnaire-types">
+      <bpmn2:incoming>Flow_0tmgfbs</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0rg7ugb</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_0tmgfbs" sourceRef="Event_0mol2at" targetRef="Activity_1iwuxp4" />
+    <bpmn2:sequenceFlow id="Flow_0rg7ugb" sourceRef="Activity_1iwuxp4" targetRef="Gateway_1goycff" />
+    <bpmn2:exclusiveGateway id="Gateway_1goycff">
+      <bpmn2:incoming>Flow_0rg7ugb</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1lj5xz7</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_10ohq7u</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="Flow_1lj5xz7" sourceRef="Gateway_1goycff" targetRef="Event_0b1x878" />
+    <bpmn2:intermediateCatchEvent id="Event_0b1x878" name="BORG &#60;= 6">
+      <bpmn2:incoming>Flow_1lj5xz7</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0gg8g6n</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_1nfqhoe">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:task id="Activity_05rgjkw" name="feedback" cp:codeSystem="feedback" cp:code="game_score" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/feedback">
+      <bpmn2:incoming>Flow_0gg8g6n</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0jp9ctw</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_0gg8g6n" sourceRef="Event_0b1x878" targetRef="Activity_05rgjkw" />
+    <bpmn2:endEvent id="Event_0m9d24j">
+      <bpmn2:incoming>Flow_0jp9ctw</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="Flow_0jp9ctw" sourceRef="Activity_05rgjkw" targetRef="Event_0m9d24j" />
+    <bpmn2:sequenceFlow id="Flow_10ohq7u" sourceRef="Gateway_1goycff" targetRef="Event_1e9v80c" />
+    <bpmn2:intermediateCatchEvent id="Event_1e9v80c" name="BORG &#62; 6">
+      <bpmn2:incoming>Flow_10ohq7u</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1x2vqa5</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_0tr6brg">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:task id="Activity_1xynfp3" name="Reminder medication intake" cp:codeSystem="reminder/message" cp:code="medication" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/reminder-types">
+      <bpmn2:incoming>Flow_1x2vqa5</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0jry3ee</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:task id="Activity_1v10skv" name="suggest rest of joint" cp:codeSystem="reminder/message" cp:code="suggestion" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/reminder-types">
+      <bpmn2:incoming>Flow_0jry3ee</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1eqdbm5</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_1x2vqa5" sourceRef="Event_1e9v80c" targetRef="Activity_1xynfp3" />
+    <bpmn2:sequenceFlow id="Flow_0jry3ee" sourceRef="Activity_1xynfp3" targetRef="Activity_1v10skv" />
+    <bpmn2:task id="Activity_1cw15do" name="feedback" cp:codeSystem="feedback" cp:code="game_score" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/feedback">
+      <bpmn2:incoming>Flow_1eqdbm5</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1ofg70d</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_1eqdbm5" sourceRef="Activity_1v10skv" targetRef="Activity_1cw15do" />
+    <bpmn2:endEvent id="Event_0567vrw">
+      <bpmn2:incoming>Flow_1ofg70d</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="Flow_1ofg70d" sourceRef="Activity_1cw15do" targetRef="Event_0567vrw" />
+    <bpmn2:boundaryEvent id="Event_16yi7xf" name="EHR &#60; THR" cancelActivity="false" attachedToRef="Activity_12slbw9">
+      <bpmn2:outgoing>Flow_1yukguj</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_0o7igr5">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:boundaryEvent>
+    <bpmn2:task id="Activity_1pwnlqg" name="increase the pace" cp:codeSystem="reminder/message" cp:code="game-physical" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/reminder-types">
+      <bpmn2:incoming>Flow_1yukguj</bpmn2:incoming>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_1yukguj" sourceRef="Event_16yi7xf" targetRef="Activity_1pwnlqg" />
+    <bpmn2:intermediateCatchEvent id="Event_0exgxa6" name="session_completed==NO and EHR &#62; SHR">
+      <bpmn2:incoming>Flow_06jhj3q</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0702iqt</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_0rvx34u">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="Flow_06jhj3q" sourceRef="Activity_12slbw9" targetRef="Event_0exgxa6" />
+    <bpmn2:exclusiveGateway id="Gateway_00d0zn1">
+      <bpmn2:incoming>Flow_0o8rn1w</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1t3fqa0</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_0h2281m</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="Flow_1t3fqa0" sourceRef="Gateway_00d0zn1" targetRef="Event_130wqg8" />
+    <bpmn2:task id="Activity_045bhid" name="Questionnaire reasons why" cp:codeSystem="health/questionnaire/request" cp:code="GSARQ" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/questionnaire-types">
+      <bpmn2:incoming>Flow_0zugedg</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_14gy0wo</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_0h2281m" sourceRef="Gateway_00d0zn1" targetRef="Event_0pymy7d" />
+    <bpmn2:task id="Activity_1ocjd69" name="Reminder medication intake" cp:codeSystem="reminder/message" cp:code="medication" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/reminder-types">
+      <bpmn2:incoming>Flow_0702iqt</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_08hca2j</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_0702iqt" sourceRef="Event_0exgxa6" targetRef="Activity_1ocjd69" />
+    <bpmn2:task id="Activity_0bea6rd" name="suggest rest of joint" cp:codeSystem="reminder/message" cp:code="suggestion" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/reminder-types">
+      <bpmn2:incoming>Flow_08hca2j</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1ss7yq5</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_08hca2j" sourceRef="Activity_1ocjd69" targetRef="Activity_0bea6rd" />
+    <bpmn2:endEvent id="Event_00ommh8">
+      <bpmn2:incoming>Flow_1ss7yq5</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="Flow_1ss7yq5" sourceRef="Activity_0bea6rd" targetRef="Event_00ommh8" />
+    <bpmn2:sequenceFlow id="Flow_0zugedg" sourceRef="Event_0pymy7d" targetRef="Activity_045bhid" />
+    <bpmn2:intermediateCatchEvent id="Event_0pymy7d" name="BORG &#60;= 6">
+      <bpmn2:incoming>Flow_0h2281m</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0zugedg</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_0ru7vhk">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:endEvent id="Event_0a1d1eg">
+      <bpmn2:incoming>Flow_14gy0wo</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="Flow_14gy0wo" sourceRef="Activity_045bhid" targetRef="Event_0a1d1eg" />
+    <bpmn2:task id="Activity_0fu1gtd" name="Borg assessment" cp:codeSystem="health/questionnaire/request" cp:code="BORG" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/questionnaire-types">
+      <bpmn2:incoming>Flow_1hd7ntf</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0i0fomv</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_1hd7ntf" sourceRef="Activity_0zeahon" targetRef="Activity_0fu1gtd" />
+    <bpmn2:endEvent id="Event_1lx8zif">
+      <bpmn2:incoming>Flow_0i0fomv</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="Flow_0i0fomv" sourceRef="Activity_0fu1gtd" targetRef="Event_1lx8zif" />
+    <bpmn2:boundaryEvent id="Event_0rfnn4f" name="EHR &#62; THR" cancelActivity="false" attachedToRef="Activity_12slbw9">
+      <bpmn2:outgoing>Flow_1453eap</bpmn2:outgoing>
+      <bpmn2:conditionalEventDefinition id="ConditionalEventDefinition_16bvsb4">
+        <bpmn2:condition xsi:type="bpmn2:tFormalExpression" />
+      </bpmn2:conditionalEventDefinition>
+    </bpmn2:boundaryEvent>
+    <bpmn2:task id="Activity_1vf8cqy" name="decrease the pace" cp:codeSystem="reminder/message" cp:code="game-physical" cp:contextSystem="http://www.helict.de/fhir/CodeSystem/vCare/reminder-types">
+      <bpmn2:incoming>Flow_1453eap</bpmn2:incoming>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_1453eap" sourceRef="Event_0rfnn4f" targetRef="Activity_1vf8cqy" />
+  </bpmn2:process>
+  <bpmn2:error id="Error_1jbgmf2" name="Pain" />
+  <bpmn2:error id="Error_1btq7ly" name="dyspnoea" />
+  <bpmn2:error id="Error_0kh5fmz" name="palpitation" />
+  <bpmn2:error id="Error_0mbem9x" name="SHR reached" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNEdge id="Flow_1453eap_di" bpmnElement="Flow_1453eap">
+        <di:waypoint x="728" y="-20" />
+        <di:waypoint x="784" y="-20" />
+        <di:waypoint x="784" y="-60" />
+        <di:waypoint x="840" y="-60" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0i0fomv_di" bpmnElement="Flow_0i0fomv">
+        <di:waypoint x="160" y="600" />
+        <di:waypoint x="212" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hd7ntf_di" bpmnElement="Flow_1hd7ntf">
+        <di:waypoint x="110" y="520" />
+        <di:waypoint x="110" y="560" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14gy0wo_di" bpmnElement="Flow_14gy0wo">
+        <di:waypoint x="530" y="600" />
+        <di:waypoint x="530" y="652" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zugedg_di" bpmnElement="Flow_0zugedg">
+        <di:waypoint x="550" y="458" />
+        <di:waypoint x="550" y="489" />
+        <di:waypoint x="530" y="489" />
+        <di:waypoint x="530" y="520" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ss7yq5_di" bpmnElement="Flow_1ss7yq5">
+        <di:waypoint x="900" y="250" />
+        <di:waypoint x="952" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08hca2j_di" bpmnElement="Flow_08hca2j">
+        <di:waypoint x="750" y="250" />
+        <di:waypoint x="800" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0702iqt_di" bpmnElement="Flow_0702iqt">
+        <di:waypoint x="598" y="220" />
+        <di:waypoint x="624" y="220" />
+        <di:waypoint x="624" y="250" />
+        <di:waypoint x="650" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h2281m_di" bpmnElement="Flow_0h2281m">
+        <di:waypoint x="550" y="395" />
+        <di:waypoint x="550" y="422" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1t3fqa0_di" bpmnElement="Flow_1t3fqa0">
+        <di:waypoint x="575" y="370" />
+        <di:waypoint x="602" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06jhj3q_di" bpmnElement="Flow_06jhj3q">
+        <di:waypoint x="580" y="160" />
+        <di:waypoint x="580" y="202" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yukguj_di" bpmnElement="Flow_1yukguj">
+        <di:waypoint x="680" y="-78" />
+        <di:waypoint x="680" y="-140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ofg70d_di" bpmnElement="Flow_1ofg70d">
+        <di:waypoint x="1860" y="160" />
+        <di:waypoint x="1942" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1eqdbm5_di" bpmnElement="Flow_1eqdbm5">
+        <di:waypoint x="1680" y="160" />
+        <di:waypoint x="1760" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jry3ee_di" bpmnElement="Flow_0jry3ee">
+        <di:waypoint x="1500" y="160" />
+        <di:waypoint x="1580" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1x2vqa5_di" bpmnElement="Flow_1x2vqa5">
+        <di:waypoint x="1328" y="160" />
+        <di:waypoint x="1400" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10ohq7u_di" bpmnElement="Flow_10ohq7u">
+        <di:waypoint x="1200" y="75" />
+        <di:waypoint x="1200" y="160" />
+        <di:waypoint x="1292" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jp9ctw_di" bpmnElement="Flow_0jp9ctw">
+        <di:waypoint x="1500" y="50" />
+        <di:waypoint x="1572" y="50" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gg8g6n_di" bpmnElement="Flow_0gg8g6n">
+        <di:waypoint x="1328" y="50" />
+        <di:waypoint x="1400" y="50" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lj5xz7_di" bpmnElement="Flow_1lj5xz7">
+        <di:waypoint x="1225" y="50" />
+        <di:waypoint x="1292" y="50" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rg7ugb_di" bpmnElement="Flow_0rg7ugb">
+        <di:waypoint x="1010" y="50" />
+        <di:waypoint x="1175" y="50" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tmgfbs_di" bpmnElement="Flow_0tmgfbs">
+        <di:waypoint x="798" y="50" />
+        <di:waypoint x="910" y="50" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o1w6jc_di" bpmnElement="Flow_1o1w6jc">
+        <di:waypoint x="710" y="50" />
+        <di:waypoint x="762" y="50" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_057hwmo_di" bpmnElement="Flow_057hwmo">
+        <di:waypoint x="750" y="540" />
+        <di:waypoint x="750" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tu0i5v_di" bpmnElement="Flow_0tu0i5v">
+        <di:waypoint x="620" y="388" />
+        <di:waypoint x="620" y="424" />
+        <di:waypoint x="750" y="424" />
+        <di:waypoint x="750" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_090hqum_di" bpmnElement="Flow_090hqum">
+        <di:waypoint x="750" y="660" />
+        <di:waypoint x="750" y="742" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0o8rn1w_di" bpmnElement="Flow_0o8rn1w">
+        <di:waypoint x="490" y="370" />
+        <di:waypoint x="525" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_047nvfs_di" bpmnElement="Flow_047nvfs">
+        <di:waypoint x="440" y="160" />
+        <di:waypoint x="440" y="202" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0823pab_di" bpmnElement="Flow_0823pab">
+        <di:waypoint x="110" y="410" />
+        <di:waypoint x="110" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fn8k9o_di" bpmnElement="Flow_1fn8k9o">
+        <di:waypoint x="110" y="300" />
+        <di:waypoint x="110" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0260arp_di" bpmnElement="Flow_0260arp">
+        <di:waypoint x="110" y="168" />
+        <di:waypoint x="110" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fw9b67_di" bpmnElement="Flow_0fw9b67">
+        <di:waypoint x="-60" y="40" />
+        <di:waypoint x="85" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0y6fzzn_di" bpmnElement="Flow_0y6fzzn">
+        <di:waypoint x="-232" y="40" />
+        <di:waypoint x="-160" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mioek8_di" bpmnElement="Flow_0mioek8">
+        <di:waypoint x="110" y="65" />
+        <di:waypoint x="110" y="132" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dpelaq_di" bpmnElement="Flow_1dpelaq">
+        <di:waypoint x="208" y="40" />
+        <di:waypoint x="260" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rhex2b_di" bpmnElement="Flow_0rhex2b">
+        <di:waypoint x="135" y="40" />
+        <di:waypoint x="172" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19lq7bs_di" bpmnElement="Flow_19lq7bs">
+        <di:waypoint x="-350" y="310" />
+        <di:waypoint x="-350" y="352" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02qqh76_di" bpmnElement="Flow_02qqh76">
+        <di:waypoint x="-350" y="168" />
+        <di:waypoint x="-350" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10hjzk3_di" bpmnElement="Flow_10hjzk3">
+        <di:waypoint x="-350" y="65" />
+        <di:waypoint x="-350" y="132" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bswmyr_di" bpmnElement="Flow_0bswmyr">
+        <di:waypoint x="-325" y="40" />
+        <di:waypoint x="-268" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kai4dg_di" bpmnElement="Flow_0kai4dg">
+        <di:waypoint x="-430" y="40" />
+        <di:waypoint x="-375" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rr3qwp_di" bpmnElement="Flow_0rr3qwp">
+        <di:waypoint x="-582" y="40" />
+        <di:waypoint x="-530" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jvvy6o_di" bpmnElement="Flow_1jvvy6o">
+        <di:waypoint x="440" y="238" />
+        <di:waypoint x="440" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_014zorr_di" bpmnElement="Event_014zorr">
+        <dc:Bounds x="-618" y="22" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0le6sbg_di" bpmnElement="Activity_0le6sbg">
+        <dc:Bounds x="390" y="330" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12slbw9_di" bpmnElement="Activity_12slbw9" isExpanded="true">
+        <dc:Bounds x="260" y="-60" width="450" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dl9k9m_di" bpmnElement="Activity_1dl9k9m">
+        <dc:Bounds x="380" y="-30" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05rvltr_di" bpmnElement="Activity_05rvltr">
+        <dc:Bounds x="490" y="-30" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mzjdcw_di" bpmnElement="Activity_0mzjdcw">
+        <dc:Bounds x="380" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06ztz5p_di" bpmnElement="Activity_06ztz5p">
+        <dc:Bounds x="490" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1hypayp_di" bpmnElement="Event_03lnbax">
+        <dc:Bounds x="572" y="62" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vqhgut_di" bpmnElement="Event_0fhsqu6">
+        <dc:Bounds x="362" y="72" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1k6oq0l_di" bpmnElement="Event_0spfqss">
+        <dc:Bounds x="572" y="-8" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0nyqp77_di" bpmnElement="Event_1rcmqgf">
+        <dc:Bounds x="362" y="-48" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qq44ks_di" bpmnElement="Activity_0qq44ks">
+        <dc:Bounds x="-530" y="0" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0uqn2t0_di" bpmnElement="Gateway_0uqn2t0" isMarkerVisible="true">
+        <dc:Bounds x="-375" y="15" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0kg7u0z_di" bpmnElement="Event_0didnqf">
+        <dc:Bounds x="-268" y="22" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-291" y="65" width="84" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_133ic4h_di" bpmnElement="Event_1detp0c">
+        <dc:Bounds x="-368" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-453" y="136" width="84" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fp7vs6_di" bpmnElement="Activity_0fp7vs6">
+        <dc:Bounds x="-400" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ifh0ec_di" bpmnElement="Event_0ifh0ec">
+        <dc:Bounds x="-368" y="352" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0c1rsfk_di" bpmnElement="Gateway_0c1rsfk" isMarkerVisible="true">
+        <dc:Bounds x="85" y="15" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14pdudr_di" bpmnElement="Event_154uzdf">
+        <dc:Bounds x="172" y="22" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="156" y="65" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00aadly_di" bpmnElement="Event_1y5m7ss">
+        <dc:Bounds x="92" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="14" y="143" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1yy4c4m_di" bpmnElement="Activity_1yy4c4m">
+        <dc:Bounds x="-160" y="0" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ja3id7_di" bpmnElement="Activity_0ja3id7">
+        <dc:Bounds x="60" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rupp2g_di" bpmnElement="Activity_1rupp2g">
+        <dc:Bounds x="60" y="330" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zeahon_di" bpmnElement="Activity_0zeahon">
+        <dc:Bounds x="60" y="440" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1dn1mlt_di" bpmnElement="Event_1k8s9z2">
+        <dc:Bounds x="422" y="202" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="343" y="245" width="79" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0atzi50_di" bpmnElement="Event_130wqg8">
+        <dc:Bounds x="602" y="352" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="604" y="333" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1n37yk1_di" bpmnElement="Activity_1n37yk1">
+        <dc:Bounds x="700" y="460" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gnuigg_di" bpmnElement="Activity_1gnuigg">
+        <dc:Bounds x="700" y="580" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ixwbh4_di" bpmnElement="Event_0ixwbh4">
+        <dc:Bounds x="732" y="742" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0583l3f_di" bpmnElement="Event_0mol2at">
+        <dc:Bounds x="762" y="32" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="750" y="76" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1iwuxp4_di" bpmnElement="Activity_1iwuxp4">
+        <dc:Bounds x="910" y="10" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1goycff_di" bpmnElement="Gateway_1goycff" isMarkerVisible="true">
+        <dc:Bounds x="1175" y="25" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0c3zv86_di" bpmnElement="Event_0b1x878">
+        <dc:Bounds x="1292" y="32" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1282" y="75" width="58" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05rgjkw_di" bpmnElement="Activity_05rgjkw">
+        <dc:Bounds x="1400" y="10" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0m9d24j_di" bpmnElement="Event_0m9d24j">
+        <dc:Bounds x="1572" y="32" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0rsc0pn_di" bpmnElement="Event_1e9v80c">
+        <dc:Bounds x="1292" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1285" y="185" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xynfp3_di" bpmnElement="Activity_1xynfp3">
+        <dc:Bounds x="1400" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1v10skv_di" bpmnElement="Activity_1v10skv">
+        <dc:Bounds x="1580" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cw15do_di" bpmnElement="Activity_1cw15do">
+        <dc:Bounds x="1760" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0567vrw_di" bpmnElement="Event_0567vrw">
+        <dc:Bounds x="1942" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pwnlqg_di" bpmnElement="Activity_1pwnlqg">
+        <dc:Bounds x="630" y="-220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1361f8i_di" bpmnElement="Event_0exgxa6">
+        <dc:Bounds x="562" y="202" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="483" y="213" width="79" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_00d0zn1_di" bpmnElement="Gateway_00d0zn1" isMarkerVisible="true">
+        <dc:Bounds x="525" y="345" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_045bhid_di" bpmnElement="Activity_045bhid">
+        <dc:Bounds x="480" y="520" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ocjd69_di" bpmnElement="Activity_1ocjd69">
+        <dc:Bounds x="650" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bea6rd_di" bpmnElement="Activity_0bea6rd">
+        <dc:Bounds x="800" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00ommh8_di" bpmnElement="Event_00ommh8">
+        <dc:Bounds x="952" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1cyesyi_di" bpmnElement="Event_0pymy7d">
+        <dc:Bounds x="532" y="422" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="471" y="453" width="58" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0a1d1eg_di" bpmnElement="Event_0a1d1eg">
+        <dc:Bounds x="512" y="652" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fu1gtd_di" bpmnElement="Activity_0fu1gtd">
+        <dc:Bounds x="60" y="560" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1lx8zif_di" bpmnElement="Event_1lx8zif">
+        <dc:Bounds x="212" y="582" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vf8cqy_di" bpmnElement="Activity_1vf8cqy">
+        <dc:Bounds x="840" y="-100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0igc7c2_di" bpmnElement="Event_0rfnn4f">
+        <dc:Bounds x="692" y="-38" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="720" y="-57" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0kdeh15_di" bpmnElement="Event_16yi7xf">
+        <dc:Bounds x="662" y="-78" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="611" y="-108" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1u6wems_di" bpmnElement="Event_1t2qv0z">
+        <dc:Bounds x="582" y="-78" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

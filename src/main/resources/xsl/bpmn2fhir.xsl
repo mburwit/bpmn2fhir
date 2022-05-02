@@ -34,9 +34,20 @@
                 <xsl:with-param name="description" select="bpmn2:documentation"/>
             </xsl:call-template>
             <!-- code -->
-            <xsl:call-template name="codes">
-                <xsl:with-param name="codes" select="@cp:code"/>
-            </xsl:call-template>
+            <xsl:choose>
+                <!-- codes with code system -->
+                <xsl:when test="@cp:codeSystem">
+                    <xsl:call-template name="codes">
+                        <xsl:with-param name="action" select="current()"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <!-- ... or simple text codes -->
+                <xsl:otherwise>
+                    <xsl:call-template name="simpleCodes">
+                        <xsl:with-param name="codes" select="@cp:code"/>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
             <!-- related actions -->
             <xsl:call-template name="relatedActions">
                 <xsl:with-param name="action" select="current()"/>
@@ -226,7 +237,7 @@
         </xsl:element>
     </xsl:template>
 
-    <xsl:template name="codes">
+    <xsl:template name="simpleCodes">
         <xsl:param name="codes"/>
         <xsl:for-each select="tokenize($codes,',')">
             <xsl:element name="code">
@@ -237,6 +248,48 @@
                 </xsl:element>
             </xsl:element>
         </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template name="codes">
+        <xsl:param name="action"/>
+        <xsl:element name="code">
+            <xsl:element name="coding">
+                <xsl:element name="system">
+                    <xsl:attribute name="value">
+                        <xsl:text>http://www.helict.de/fhir/CodeSystem/vCare/service-types</xsl:text>
+                    </xsl:attribute>
+                </xsl:element>
+                <xsl:element name="code">
+                    <xsl:attribute name="value">
+                        <xsl:value-of select="$action/@cp:codeSystem"/>
+                    </xsl:attribute>
+                </xsl:element>
+            </xsl:element>
+            <xsl:element name="coding">
+                <xsl:element name="system">
+                    <xsl:attribute name="value">
+                        <xsl:value-of select="$action/@cp:contextSystem"/>
+                    </xsl:attribute>
+                </xsl:element>
+                <xsl:element name="code">
+                    <xsl:attribute name="value">
+                        <xsl:value-of select="$action/@cp:code"/>
+                    </xsl:attribute>
+                </xsl:element>
+            </xsl:element>
+            <xsl:element name="coding">
+                <xsl:element name="system">
+                    <xsl:attribute name="value">
+                        <xsl:value-of select="$action/@cp:contextConfigSystem"/>
+                    </xsl:attribute>
+                </xsl:element>
+                <xsl:element name="code">
+                    <xsl:attribute name="value">
+                        <xsl:value-of select="$action/@cp:contextConfigCode"/>
+                    </xsl:attribute>
+                </xsl:element>
+            </xsl:element>
+        </xsl:element>
     </xsl:template>
 
     <xsl:template name="description">
@@ -375,7 +428,8 @@
             <xsl:variable name="goalStates" select="fn:getGoalStatesForAction(//bpmn2:definitions, $action)"/>
             <xsl:if test="count($goalStates)>0">
                 <xsl:element name="extension">
-                    <xsl:attribute name="url">http://www.helict.de/fhir/StructureDefinition/Extension/ActionGoals</xsl:attribute>
+                    <xsl:attribute name="url">http://www.helict.de/fhir/StructureDefinition/Extension/ActionGoals
+                    </xsl:attribute>
                     <xsl:apply-templates select="$goalStates"/>
                 </xsl:element>
             </xsl:if>
