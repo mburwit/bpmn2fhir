@@ -1,9 +1,9 @@
-package ca.uhn.fhir.jpa.starter.tester;
+package org.helict.fhir.jpa.starter.tester;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.jpa.starter.AppProperties;
-import ca.uhn.fhir.jpa.starter.tester.interceptor.AuthorizationHeaderAuthInterceptor;
-import ca.uhn.fhir.jpa.starter.tester.interceptor.KeycloakAuthInterceptor;
+import org.helict.fhir.jpa.starter.tester.interceptor.AuthorizationHeaderAuthInterceptor;
+import org.helict.fhir.jpa.starter.tester.interceptor.KeycloakAuthInterceptor;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.rest.client.interceptor.BasicAuthInterceptor;
 import ca.uhn.fhir.rest.client.interceptor.BearerTokenAuthInterceptor;

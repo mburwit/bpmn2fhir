@@ -1,4 +1,4 @@
-package ca.uhn.fhir.jpa.starter.tester.interceptor;
+package org.helict.fhir.jpa.starter.tester.interceptor;
 
 import ca.uhn.fhir.rest.api.Constants;
 import ca.uhn.fhir.rest.client.api.IClientInterceptor;

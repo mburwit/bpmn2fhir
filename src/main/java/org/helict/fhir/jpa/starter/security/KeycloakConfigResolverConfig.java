@@ -1,4 +1,4 @@
-package autoconfigure;
+package org.helict.fhir.jpa.starter.security;
 
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;

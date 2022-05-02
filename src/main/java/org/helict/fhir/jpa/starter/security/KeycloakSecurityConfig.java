@@ -1,4 +1,4 @@
-package autoconfigure;
+package org.helict.fhir.jpa.starter.security;
 
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
@@ -13,13 +13,20 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.web.authentication.logout.ForwardLogoutSuccessHandler;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -77,9 +84,32 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
 		http.cors()
 			.and().authorizeRequests()
 			.antMatchers("/fhir/metadata").permitAll()
-			.antMatchers("/fhir/**").authenticated()
-			.anyRequest().permitAll()
-			.and().csrf().ignoringAntMatchers("/fhir/**");
+			.anyRequest().authenticated()
+			.and().csrf().ignoringAntMatchers("/fhir/**")
+			.and()
+			.logout()
+			.addLogoutHandler(keycloakLogoutHandler())
+			.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+			.logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler())
+			.permitAll();
+	}
+
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		/* @formatter:off */
+		web
+			.ignoring().mvcMatchers("/js/**")
+			.and()
+			.ignoring().mvcMatchers("/css/**")
+			.and()
+			.ignoring().mvcMatchers("/images/**")
+			.and()
+			.ignoring().mvcMatchers("/html/**")
+			.and()
+			.ignoring().antMatchers(HttpMethod.OPTIONS, "/**")
+			.and()
+			.ignoring().antMatchers("/fhir/metadata");
+		/* @formatter:on */
 	}
 
 	@Bean

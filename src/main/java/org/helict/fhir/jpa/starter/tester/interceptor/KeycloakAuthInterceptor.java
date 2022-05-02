@@ -1,7 +1,6 @@
-package ca.uhn.fhir.jpa.starter.tester.interceptor;
+package org.helict.fhir.jpa.starter.tester.interceptor;
 
 import ca.uhn.fhir.jpa.starter.AppProperties;
-import ca.uhn.fhir.jpa.starter.tester.FhirClientFactory;
 import ca.uhn.fhir.rest.api.Constants;
 import ca.uhn.fhir.rest.client.api.IClientInterceptor;
 import ca.uhn.fhir.rest.client.api.IHttpRequest;

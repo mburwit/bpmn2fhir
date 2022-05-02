@@ -1,4 +1,4 @@
-package autoconfigure;
+package org.helict.fhir.jpa.starter.security;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
