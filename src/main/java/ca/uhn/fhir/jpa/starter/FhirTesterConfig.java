@@ -1,6 +1,6 @@
 package ca.uhn.fhir.jpa.starter;
 
-import ca.uhn.fhir.jpa.starter.tester.FhirClientFactory;
+import org.helict.fhir.jpa.starter.tester.FhirClientFactory;
 import ca.uhn.fhir.to.FhirTesterMvcConfig;
 import ca.uhn.fhir.to.TesterConfig;
 import org.springframework.context.annotation.Bean;

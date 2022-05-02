@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=autoconfigure.SecurityAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.helict.fhir.jpa.starter.security.SecurityAutoConfiguration
