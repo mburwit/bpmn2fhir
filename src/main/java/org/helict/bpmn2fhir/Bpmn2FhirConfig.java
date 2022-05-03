@@ -1,6 +1,7 @@
 package org.helict.bpmn2fhir;
 
 import ca.uhn.fhir.jpa.starter.AppProperties;
+import org.slf4j.Logger;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,6 +16,7 @@ public class Bpmn2FhirConfig {
 
 	public static final String BPMN_2_FHIR_BASE_PATH = "/bpmn2fhir";
 	public static final String ICD_API_TOKEN_BASE_PATH = "/icd-api-token";
+	private static final Logger ourLog = org.slf4j.LoggerFactory.getLogger(Bpmn2FhirConfig.class);
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer(AppProperties appProperties) {
@@ -22,8 +24,9 @@ public class Bpmn2FhirConfig {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				String[] allAllowedCORSOrigins = appProperties.getCors().getAllowed_origin().toArray(new String[0]);
-				registry.addMapping(BPMN_2_FHIR_BASE_PATH).allowedOrigins(allAllowedCORSOrigins);
-				registry.addMapping(ICD_API_TOKEN_BASE_PATH).allowedOrigins(allAllowedCORSOrigins);
+				ourLog.info("Applying global CORS config. Allowed Origins: {}", (Object[]) allAllowedCORSOrigins);
+				registry.addMapping(BPMN_2_FHIR_BASE_PATH).allowedOriginPatterns(allAllowedCORSOrigins);
+				registry.addMapping(ICD_API_TOKEN_BASE_PATH).allowedOriginPatterns(allAllowedCORSOrigins);
 			}
 		};
 	}
